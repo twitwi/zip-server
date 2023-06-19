@@ -11,8 +11,7 @@ navigator.serviceWorker.register(workerURL)
 navigator.serviceWorker.ready.then(() => {
     let broadcast: BroadcastChannel;
 
-    loadButton.onclick = () => {
-        const url = urlInput.value;
+    const go = (url) => {
         const id = crypto.randomUUID();
         broadcast?.close();
         broadcast = new BroadcastChannel(id);
@@ -39,6 +38,18 @@ navigator.serviceWorker.ready.then(() => {
             id: id,
             url: url,
         });
+    };
+    
+    if (window.location.hash) {
+        let url = window.location.hash.substr(1);
+        if (url.startsWith('cors://')) {
+            url = 'https://'+url.substring(0, 4)+'.heeere.'+'com'+'/https://'+url.substring(7);
+        }
+        go(url);
+    }
+
+    loadButton.onclick = () => {
+        go(urlInput.value);
     };
     loadButton.disabled = false;
 });
