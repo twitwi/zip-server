@@ -11,7 +11,8 @@ navigator.serviceWorker.register(workerURL)
 navigator.serviceWorker.ready.then(() => {
     let broadcast: BroadcastChannel;
 
-    const go = (url) => {
+    const go = (urlAndPath) => {
+        const [url, path] = (urlAndPath+'###').split('###');
         const id = crypto.randomUUID();
         broadcast?.close();
         broadcast = new BroadcastChannel(id);
@@ -24,7 +25,7 @@ navigator.serviceWorker.ready.then(() => {
                     const url = URL.createObjectURL(blob);
                     console.log('Link to zip:', url)
 
-                    document.location.href = `./${id}/`;
+                    document.location.href = `./${id}/${path}`;
                     // const iframe = document.createElement('iframe');
                     // iframe.src = `/${id}/`;
                     // let iframeContainer = document.querySelector('#iframe-container');
