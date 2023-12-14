@@ -161,6 +161,8 @@ const contentTypesByExtension = {
     'html': 'text/html',
     'htm': 'text/html',
     'zip': 'application/zip',
+    'svg': 'image/svg+xml',
+    'pdf': 'application/pdf',
 } as const;
 
 // Return the content type of file based on the name extension
